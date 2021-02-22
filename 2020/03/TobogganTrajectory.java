@@ -16,25 +16,12 @@ public class TobogganTrajectory {
                     .toArray(GridSquare[][]::new);
     }
 
-    private static long part1(GridSquare[][] grid) {
-        long treeCount = 0;
-
-        for (int i = 0, j = 0; i < grid.length; i += 1, j += 3) {
-            if (grid[i][j % grid[i].length] == GridSquare.Tree) {
-                treeCount += 1;
-            }
-        }
-
-        return treeCount;
-    }
-
-    private static long part2(GridSquare[][] grid) {
+    private static long solve(GridSquare[][] grid, int[][] slopeDescriptors) {
         // for desc in slopeDescriptors, desc[0] is the number of squares to the right
         // desc[1] is the number of squares down
-        int[][] slopeDescriptors = {{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}};
-        long[] treeCounts = {0, 0, 0, 0, 0};
+        long[] treeCounts = new long[slopeDescriptors.length];
 
-        for (int n = 0; n < 5; ++n) {
+        for (int n = 0; n < slopeDescriptors.length; ++n) {
             for (int i = 0, j = 0; i < grid.length; i += slopeDescriptors[n][1], j += slopeDescriptors[n][0]) {
                 if (grid[i][j % grid[i].length] == GridSquare.Tree) {
                     treeCounts[n] += 1;
@@ -54,8 +41,8 @@ public class TobogganTrajectory {
             String filename = args[0];
             GridSquare[][] grid = readLines(filename);
 
-            System.out.println("Part 1: " + part1(grid));
-            System.out.println("Part 2: " + part2(grid));
+            System.out.println("Part 1: " + solve(grid, new int[][] {{3, 1}}));
+            System.out.println("Part 2: " + solve(grid, new int[][] {{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}}));
         } catch (IOException e) {
             e.printStackTrace();
         }
