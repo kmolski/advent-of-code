@@ -29,9 +29,10 @@ public class BinaryBoarding {
         return min;
     }
 
-    private static int[] calculateSeatIDs(List<String> lines) {
-        return lines.stream().mapToInt(l -> calculateIndex(l, 127, 'F', 'B') * 8
-                                          + calculateIndex(l, 7, 'L', 'R')).toArray();
+    private static List<Integer> calculateSeatIDs(List<String> lines) {
+        return lines.stream().map(l -> calculateIndex(l, 127, 'F', 'B') * 8
+                                     + calculateIndex(l, 7, 'L', 'R'))
+                             .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
@@ -41,15 +42,12 @@ public class BinaryBoarding {
 
         try {
             String filename = args[0];
-            List<String> lines = readLines(filename);
-            int[] seatIDs = calculateSeatIDs(lines);
+            List<Integer> seatIDs = calculateSeatIDs(readLines(filename));
 
-            IntSummaryStatistics stats = Arrays.stream(seatIDs).summaryStatistics();
+            IntSummaryStatistics stats = seatIDs.stream().mapToInt(Integer::intValue).summaryStatistics();
             System.out.println("Part 1: " + stats.getMax());
-
-            Set<Integer> allIDs = Arrays.stream(seatIDs).boxed().collect(Collectors.toSet());
             System.out.println("Part 2: " + IntStream.rangeClosed(stats.getMin(), stats.getMax())
-                                                     .filter(i -> !allIDs.contains(i))
+                                                     .filter(i -> !seatIDs.contains(i))
                                                      .findAny().orElse(0));
         } catch (IOException e) {
             e.printStackTrace();
