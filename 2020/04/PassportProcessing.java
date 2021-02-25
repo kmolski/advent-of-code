@@ -12,7 +12,7 @@ class Passport {
     private static final List<String> ALLOWED_EYE_COLORS = List.of("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
 
     private static boolean intInRange(String value, int minInclusive, int maxInclusive) {
-        int intValue = Integer.parseInt(value.replaceAll("[\\D]", ""));
+        int intValue = Integer.parseInt(value.replaceAll("\\D", ""));
         return minInclusive <= intValue && intValue <= maxInclusive;
     }
 

@@ -34,8 +34,8 @@ public class CustomCustoms {
 
             System.out.println("Part 1: " +
                     groups.stream().map(set -> set.stream().flatMap(CustomCustoms::stringToCharStream)
-                                                           .collect(Collectors.toSet()).size())
-                                   .reduce(0, Integer::sum));
+                                                           .distinct().count())
+                                   .reduce(0L, Long::sum));
 
             System.out.println("Part 2: " +
                     groups.stream().map(set -> set.stream().map(CustomCustoms::stringToCharBag)
