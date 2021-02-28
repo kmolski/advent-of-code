@@ -3,10 +3,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EncodingError {
     private static List<Long> readInts(String filename) throws IOException {
-        return Files.lines(Paths.get(filename)).map(Long::parseLong).collect(Collectors.toList());
+        try (Stream<String> lines = Files.lines(Paths.get(filename))) {
+            return lines.map(Long::parseLong).collect(Collectors.toList());
+        }
     }
 
     private static boolean containsAddendsForSum(Collection<Long> collection, long sum) {

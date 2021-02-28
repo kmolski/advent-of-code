@@ -4,10 +4,13 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PasswordPhilosophy {
     private static List<String> readLines(String filename) throws IOException {
-        return Files.lines(Paths.get(filename)).collect(Collectors.toList());
+        try (Stream<String> lines = Files.lines(Paths.get(filename))) {
+            return lines.collect(Collectors.toList());
+        }
     }
 
     private static boolean part1(String line) {

@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 enum GridSquare {
     Open,
@@ -10,10 +11,11 @@ enum GridSquare {
 
 public class TobogganTrajectory {
     private static GridSquare[][] readLines(String filename) throws IOException {
-        return Files.lines(Paths.get(filename))
-                    .map(line -> line.chars().mapToObj(c -> (c == '#') ? GridSquare.Tree : GridSquare.Open)
-                                             .toArray(GridSquare[]::new))
-                    .toArray(GridSquare[][]::new);
+        try (Stream<String> lines = Files.lines(Paths.get(filename))) {
+            return lines.map(line -> line.chars().mapToObj(c -> (c == '#') ? GridSquare.Tree : GridSquare.Open)
+                                                 .toArray(GridSquare[]::new))
+                        .toArray(GridSquare[][]::new);
+        }
     }
 
     private static long solve(GridSquare[][] grid, int[][] slopeDescriptors) {

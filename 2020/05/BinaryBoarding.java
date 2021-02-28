@@ -1,16 +1,17 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.IntSummaryStatistics;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class BinaryBoarding {
     private static List<String> readLines(String filename) throws IOException {
-        return Files.lines(Paths.get(filename)).collect(Collectors.toList());
+        try (Stream<String> lines = Files.lines(Paths.get(filename))) {
+            return lines.collect(Collectors.toList());
+        }
     }
 
     private static int calculateIndex(String line, int max, char lowerMarker, char upperMarker) {

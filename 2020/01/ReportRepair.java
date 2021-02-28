@@ -4,10 +4,13 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ReportRepair {
     private static Set<Integer> readInts(String filename) throws IOException {
-        return Files.lines(Paths.get(filename)).map(Integer::parseInt).collect(Collectors.toSet());
+        try (Stream<String> lines = Files.lines(Paths.get(filename))) {
+            return lines.map(Integer::parseInt).collect(Collectors.toSet());
+        }
     }
 
     private static Set<Integer> solve(Set<Integer> entries, int target, int entryCount) {
