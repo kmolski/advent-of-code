@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class Haversack {
     private final String name;
@@ -55,8 +56,10 @@ class Haversack {
 
 public class HandyHaversacks {
     private static Map<String, Haversack> readEntries(String filename) throws IOException {
-        return Files.lines(Paths.get(filename)).map(Haversack::new)
-                                               .collect(Collectors.toMap(Haversack::getName, h -> h));
+        try (Stream<String> lines = Files.lines(Paths.get(filename))) {
+            return lines.map(Haversack::new)
+                        .collect(Collectors.toMap(Haversack::getName, h -> h));
+        }
     }
 
     public static void main(String[] args) {

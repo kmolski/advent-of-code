@@ -4,10 +4,13 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AdapterArray {
     private static List<Integer> readInts(String filename) throws IOException {
-        return Files.lines(Paths.get(filename)).map(Integer::parseInt).collect(Collectors.toList());
+        try (Stream<String> lines = Files.lines(Paths.get(filename))) {
+            return lines.map(Integer::parseInt).collect(Collectors.toList());
+        }
     }
 
     private static int part1(List<Integer> ints) {
