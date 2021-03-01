@@ -15,12 +15,8 @@ public class CustomCustoms {
                                     .collect(Collectors.toList());
     }
 
-    private static Stream<Character> stringToCharStream(String s) {
-        return s.chars().mapToObj(c -> (char) c);
-    }
-
-    private static Set<Character> stringToCharBag(String s) {
-        return stringToCharStream(s).collect(Collectors.toCollection(HashSet::new));
+    private static Set<Integer> stringToCharBag(String s) {
+        return s.chars().boxed().collect(Collectors.toCollection(HashSet::new));
     }
 
     public static void main(String[] args) {
@@ -33,8 +29,7 @@ public class CustomCustoms {
             List<Set<String>> groups = readGroups(filename);
 
             System.out.println("Part 1: " +
-                    groups.stream().map(set -> set.stream().flatMap(CustomCustoms::stringToCharStream)
-                                                           .distinct().count())
+                    groups.stream().map(set -> set.stream().flatMapToInt(String::chars).distinct().count())
                                    .reduce(0L, Long::sum));
 
             System.out.println("Part 2: " +
