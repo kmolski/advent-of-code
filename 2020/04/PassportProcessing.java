@@ -7,8 +7,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 class Passport {
-    private static final List<String> REQUIRED_FIELDS = List.of("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid");
-
     private static final List<String> ALLOWED_EYE_COLORS = List.of("amb", "blu", "brn", "gry", "grn", "hzl", "oth");
 
     private static boolean intInRange(String value, int minInclusive, int maxInclusive) {
@@ -39,15 +37,13 @@ class Passport {
     }
 
     public boolean hasRequiredFields() {
-        return REQUIRED_FIELDS.stream().allMatch(fields::containsKey);
+        return FIELD_CONSTRAINTS.keySet().stream().allMatch(fields::containsKey);
     }
 
     public boolean isValid() {
-        return hasRequiredFields() &&
-               fields.entrySet().stream().allMatch(e -> {
-                   Predicate<String> constraint = FIELD_CONSTRAINTS.get(e.getKey());
-                   return constraint == null || constraint.test(e.getValue());
-               });
+        return hasRequiredFields() && FIELD_CONSTRAINTS.entrySet().stream().allMatch(
+                c -> c.getValue().test(fields.get(c.getKey()))
+        );
     }
 }
 
