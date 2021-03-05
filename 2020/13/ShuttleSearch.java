@@ -14,11 +14,11 @@ public class ShuttleSearch {
         }
     }
 
-    public static int timeToArrival(int timestamp, int busID) {
+    private static int timeToArrival(int timestamp, int busID) {
         return busID - timestamp % busID;
     }
 
-    public static int part1(List<String> lines) {
+    private static int part1(List<String> lines) {
         int timestamp = Integer.parseInt(lines.get(0));
         int earliestBusID = Arrays.stream(lines.get(1).split(",")).filter(s -> !s.equals("x"))
                                   .map(Integer::parseInt)
@@ -27,7 +27,7 @@ public class ShuttleSearch {
         return earliestBusID * timeToArrival(timestamp, earliestBusID);
     }
 
-    public static long part2(List<String> lines) {
+    private static long part2(List<String> lines) {
         String[] shuttles = lines.get(1).split(",");
         int[] shuttleNumbers = new int[shuttles.length];
         int[] shuttleOffsets = new int[shuttles.length];

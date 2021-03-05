@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class RambunctiousRecitation {
-    public static int part1(int[] initialNumbers, int limit) {
+    public static int solve(int[] initialNumbers, int limit) {
         int[] prevAppearanceCounts = new int[limit];
         int[] lastAppearanceIndices = new int[limit];
 
@@ -32,7 +32,7 @@ public class RambunctiousRecitation {
         String numbers = "5,1,9,18,13,8,0";
         int[] initialNumbers = Arrays.stream(numbers.split(",")).mapToInt(Integer::parseInt).toArray();
 
-        System.out.println("Part 1: " + part1(initialNumbers, 2020));
-        System.out.println("Part 2: " + part1(initialNumbers, 30000000));
+        System.out.println("Part 1: " + solve(initialNumbers, 2020));
+        System.out.println("Part 2: " + solve(initialNumbers, 30000000));
     }
 }
