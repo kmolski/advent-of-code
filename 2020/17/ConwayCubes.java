@@ -39,10 +39,11 @@ public class ConwayCubes {
         if (i == 0) { return Stream.of(new int[dimensions]); }
 
         return generateIndices(dimensions, i - 1, min, max)
-                .flatMap(pos -> IntStream.rangeClosed(min, max).mapToObj(n -> {
-                    int[] extended = Arrays.copyOf(pos, dimensions);
-                    extended[i - 1] = n; return extended;
-                }));
+                   .flatMap(pos -> IntStream.rangeClosed(min, max)
+                       .mapToObj(n -> {
+                           int[] extended = Arrays.copyOf(pos, dimensions);
+                           extended[i - 1] = n; return extended;
+                       }));
     }
 
     private static Stream<Coordinates> generateIndices(int dimensions, int min, int max) {
