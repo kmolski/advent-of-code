@@ -35,10 +35,10 @@ public class ConwayCubes {
         ).collect(Collectors.toSet());
     }
 
-    private static Stream<int[]> generateIndices(int dimensions, int i, int min, int max) {
+    private static Stream<int[]> generateCoordinates(int dimensions, int i, int min, int max) {
         if (i == 0) { return Stream.of(new int[dimensions]); }
 
-        return generateIndices(dimensions, i - 1, min, max)
+        return generateCoordinates(dimensions, i - 1, min, max)
                    .flatMap(pos -> IntStream.rangeClosed(min, max)
                        .mapToObj(n -> {
                            int[] extended = Arrays.copyOf(pos, dimensions);
@@ -46,8 +46,8 @@ public class ConwayCubes {
                        }));
     }
 
-    private static Stream<Coordinates> generateIndices(int dimensions, int min, int max) {
-        return generateIndices(dimensions, dimensions, min, max).map(Coordinates::new);
+    private static Stream<Coordinates> generateCoordinates(int dimensions, int min, int max) {
+        return generateCoordinates(dimensions, dimensions, min, max).map(Coordinates::new);
     }
 
     private static Set<Coordinates> extendIndices(Set<Coordinates> src, int dimensions) {
@@ -57,7 +57,7 @@ public class ConwayCubes {
 
     private static long countAdjacent(Set<Coordinates> state, Coordinates pos) {
         int dimensions = pos.getArray().length;
-        return generateIndices(dimensions, dimensions, -1, 1)
+        return generateCoordinates(dimensions, dimensions, -1, 1)
                 .map(offset -> new Coordinates(IntStream.range(0, dimensions).map(i -> pos.getArray()[i] + offset[i])
                                                                              .toArray()))
                 .filter(adjacent -> !adjacent.equals(pos))
@@ -72,7 +72,7 @@ public class ConwayCubes {
             int minDimension = state.stream().mapToInt(Coordinates::min).min().getAsInt();
             int maxDimension = state.stream().mapToInt(Coordinates::max).max().getAsInt();
 
-            Set<Coordinates> indices = generateIndices(dimensions, minDimension - 1, maxDimension + 1)
+            Set<Coordinates> indices = generateCoordinates(dimensions, minDimension - 1, maxDimension + 1)
                                            .collect(Collectors.toSet());
 
             for (Coordinates pos : indices) {

@@ -41,7 +41,7 @@ class Food {
 }
 
 public class AllergenAssessment {
-    private static List<Food> readLines(String filename) throws IOException {
+    private static List<Food> readEntries(String filename) throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get(filename))) {
             return lines.map(Food::new).collect(Collectors.toList());
         }
@@ -91,7 +91,7 @@ public class AllergenAssessment {
 
         try {
             String filename = args[0];
-            List<Food> foods = readLines(filename);
+            List<Food> foods = readEntries(filename);
             Map<String, String> mappings = getUniqueMappings(foods);
 
             System.out.println("Part 1: " + foods.stream().flatMap(f -> f.getIngredients().stream())

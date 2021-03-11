@@ -41,9 +41,8 @@ class Passport {
     }
 
     public boolean isValid() {
-        return hasRequiredFields() && FIELD_CONSTRAINTS.entrySet().stream().allMatch(
-                c -> c.getValue().test(fields.get(c.getKey()))
-        );
+        return hasRequiredFields() && FIELD_CONSTRAINTS.entrySet().stream()
+                                                       .allMatch(c -> c.getValue().test(fields.get(c.getKey())));
     }
 }
 
