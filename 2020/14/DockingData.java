@@ -35,7 +35,7 @@ class DockingProgram {
         return new long[] {andMask, orMask};
     }
 
-    public static long applyBitmask(long value, long[] masks) {
+    public static long applyBitmasks(long value, long[] masks) {
         return (value & masks[0]) | masks[1];
     }
 
@@ -47,7 +47,7 @@ class DockingProgram {
                 long address = Long.parseLong(parts[0].replaceAll("\\D", ""));
 
                 long[] masks = stringToBitmasks(currentMask, '1', '0');
-                memory.put(address, applyBitmask(Long.parseLong(parts[1]), masks));
+                memory.put(address, applyBitmasks(Long.parseLong(parts[1]), masks));
             } else if (parts[0].equals("mask")) {
                 currentMask = parts[1];
             }
@@ -66,7 +66,7 @@ class DockingProgram {
                 long address = Long.parseLong(parts[0].replaceAll("\\D", ""));
 
                 long[] setMask = stringToBitmasks(currentMask, '1', 'N');
-                address = applyBitmask(address, setMask);
+                address = applyBitmasks(address, setMask);
 
                 for (int i = 0; i < combinationCount; ++i) {
                     for (int j = 0, index = -1; j < floatingBitCount; ++j) {

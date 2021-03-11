@@ -10,7 +10,7 @@ enum GridSquare {
 }
 
 public class TobogganTrajectory {
-    private static GridSquare[][] readLines(String filename) throws IOException {
+    private static GridSquare[][] readGrid(String filename) throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get(filename))) {
             return lines.map(line -> line.chars().mapToObj(c -> (c == '#') ? GridSquare.Tree : GridSquare.Open)
                                                  .toArray(GridSquare[]::new))
@@ -41,7 +41,7 @@ public class TobogganTrajectory {
 
         try {
             String filename = args[0];
-            GridSquare[][] grid = readLines(filename);
+            GridSquare[][] grid = readGrid(filename);
 
             System.out.println("Part 1: " + solve(grid, new int[][] {{3, 1}}));
             System.out.println("Part 2: " + solve(grid, new int[][] {{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}}));

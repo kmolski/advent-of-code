@@ -31,6 +31,7 @@ public class OperationOrder {
 
     private static void parse(Stream<String> tokens, Map<String, Integer> precedences, Queue<String> outQueue) {
         Deque<String> opStack = new ArrayDeque<>();
+
         tokens.forEachOrdered(token -> {
             if (token.matches("\\d+")) {
                 outQueue.add(token);

@@ -11,7 +11,7 @@ enum FerrySquare {
 }
 
 public class SeatingSystem {
-    private static FerrySquare[][] readLines(String filename) throws IOException {
+    private static FerrySquare[][] readGrid(String filename) throws IOException {
         try (Stream<String> lines = Files.lines(Paths.get(filename))) {
             return lines.map(line -> line.chars().mapToObj(c -> {
                                              switch (c) {
@@ -111,7 +111,7 @@ public class SeatingSystem {
 
         try {
             String filename = args[0];
-            FerrySquare[][] grid = readLines(filename);
+            FerrySquare[][] grid = readGrid(filename);
 
             System.out.println("Part 1: " + part1(grid));
             System.out.println("Part 2: " + part2(grid));
