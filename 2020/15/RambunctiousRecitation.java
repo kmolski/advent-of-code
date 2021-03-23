@@ -33,6 +33,6 @@ public class RambunctiousRecitation {
         int[] initialNumbers = Arrays.stream(numbers.split(",")).mapToInt(Integer::parseInt).toArray();
 
         System.out.println("Part 1: " + solve(initialNumbers, 2020));
-        System.out.println("Part 2: " + solve(initialNumbers, 30000000));
+        System.out.println("Part 2: " + solve(initialNumbers, 30_000_000));
     }
 }
